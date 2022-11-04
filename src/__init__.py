@@ -26,7 +26,9 @@
 # print(df.head())
 ###################################################################################################
 import os
+import sys
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -40,28 +42,6 @@ from alpaca.data.timeframe import TimeFrame
 # from alpaca.data import StockDataStream
 # from alpaca.data.live import StockDataStream
 
-# keys required
-client = StockHistoricalDataClient(api_key, api_secret)
-# stock_stream = StockDataStream(api_key, api_secret)
-
-# multisymbol_request_params = StockLatestQuoteRequest(symbol_or_symbols=["SPY", "GLD", "TLT"])
-# request_params = StockLatestBarRequest(
-#                         symbol_or_symbols=["SPY", "GLD", "TLT"],
-#                         timeframe=TimeFrame.Hour,
-#                         start="2022-07-01"
-#                  )
-
-# bars = client.get_stock_bars(request_params)
-# bars.df
-# gld_latest_ask_price = bars["GLD"]
-
-# latest_multisymbol_quotes = client.get_stock_latest_quote(multisymbol_request_params)
-
-# gld_latest_ask_price = latest_multisymbol_quotes["GLD"]
-
-# print(gld_latest_ask_price)
-
-
 '''
 # async handler
 async def quote_data_handler(data: any):
@@ -73,11 +53,8 @@ stock_stream.subscribe_quotes(quote_data_handler, "SPY")
 stock_stream.run()
 '''
 
-# from alpaca.data.historical import CryptoHistoricalDataClient
 from alpaca.data.historical import StockHistoricalDataClient
-# from alpaca.data.requests import CryptoBarsRequest
 from alpaca.data.requests import StockBarsRequest
-# from alpaca.data.timeframe import TimeFrame
 
 # no keys required for crypto data
 client = StockHistoricalDataClient(api_key, api_secret)
@@ -92,8 +69,26 @@ request_params = StockBarsRequest(
 bars = client.get_stock_bars(request_params)
 
 # convert to dataframe
-bars.df
+# bars.df
 
 # access bars as list - important to note that you must access by symbol key
 # even for a single symbol request - models are agnostic to number of symbols
-print(bars["GLD"])
+# print(bars["GLD"])
+
+assets = [dict(item) for item in bars["GLD"]]
+df = pd.DataFrame.from_records(assets)
+print(df.head())
+
+def historic_data():
+    print('Historic')
+
+def live_data():
+    print('Live')
+
+if __name__ == '__main__':
+    
+    if sys.argv[1]=='historic':
+        historic_data()
+
+    if sys.argv[1]=='live':
+        live_data()

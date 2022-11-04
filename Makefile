@@ -81,7 +81,11 @@ test_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+historic_data: requirements
+	$(PYTHON_INTERPRETER) src/__init__.py historic
 
+live_data: requirements
+	$(PYTHON_INTERPRETER) src/__init__.py live
 
 #################################################################################
 # Self Documenting Commands                                                     #
