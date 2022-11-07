@@ -18,6 +18,6 @@ ipykernel
 
 matplotlib
 seaborn
-nbconvert
+# nbconvert
 scikit-learn
 statsmodels
