@@ -20,4 +20,5 @@ matplotlib
 seaborn
 # nbconvert
 scikit-learn
+pmdarima
 statsmodels
