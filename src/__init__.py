@@ -62,7 +62,7 @@ def historic_data():
 
 def live_data():
     # print('Live')
-    df = yf.download(tickers = "INFY", start="2022-08-01", end="2022-11-01" ,interval="1h")
+    df = yf.download(tickers = "INFY", start="2021-11-18", end="2022-11-18" ,interval="1h")
     path = pathlib.Path('D:\Data Science\Real-Time-Data-Analysis\data\\raw\data.csv')
     data = pd.read_csv(path)
     df.reset_index(inplace=True)
