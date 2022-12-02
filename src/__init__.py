@@ -54,16 +54,16 @@ assets = [dict(item) for item in bars["AAPL"]]
 df = pd.DataFrame.from_records(assets)
 
 def historic_data():
-    path = pathlib.Path('D:\Data Science\Real-Time-Data-Analysis\data\\raw\data.csv')
+    path = pathlib.Path('D:\DataScience\Real-Time-Data-Analysis\data\\raw\data.csv')
     data = pd.read_csv(path)
     final = pd.concat([data, df], ignore_index=True)
     final.to_csv(path,index=False)
     print(final.tail(10))
 
 def live_data():
-    # print('Live')
-    df = yf.download(tickers = "INFY", start="2021-11-18", end="2022-11-18" ,interval="1h")
-    path = pathlib.Path('D:\Data Science\Real-Time-Data-Analysis\data\\raw\data.csv')
+    # print('Live') ^NSEI
+    df = yf.download(tickers = "^NSEI", start="2021-12-02", end="2022-12-02" ,interval="1h", )
+    path = pathlib.Path('D:\DataScience\Real-Time-Data-Analysis\data\\raw\data.csv')
     data = pd.read_csv(path)
     df.reset_index(inplace=True)
     final = pd.concat([data, df], ignore_index=True)
