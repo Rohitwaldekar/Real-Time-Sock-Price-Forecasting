@@ -2,7 +2,6 @@ import json
 from kafka import KafkaProducer
 from datetime import datetime
 from time import sleep
-from random import choice
 
 
 class MessageProducer:
@@ -24,11 +23,8 @@ class MessageProducer:
         random_values = [1,2,3,4,5,6,7,8,9]
 
         while True:
-            random = choice(random_values)
             data = {
-                "random_values": random,
-                "timestamp": str(datetime.now()),
-                "value_status": "High" if random > 5 else "Low"
+                "timestamp": str(datetime.now())
             }
             print(data)
             self.producer.send(topic,data)
