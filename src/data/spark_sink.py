@@ -3,6 +3,7 @@
 # findspark.init() 
 
 import pandas as pd
+import numpy as np
 import json
 # import pandas as pd
 from pyspark.sql import SparkSession
@@ -48,12 +49,12 @@ df = spark.readStream \
 
 # df.printSchema()
 
-# value_df = df.select(from_json(col("value").cast("string"),schema).alias("value"))
+value_df = df.select(from_json(col("value").cast("string"),schema).alias("value"))
 
 
-data = df.select(col("key").cast("string"),from_json(col("value").cast("string"),schema).alias("value"))
+# data = df.select(col("key").cast("string"),from_json(col("value").cast("string"),schema).alias("value"))
 
-# data = value_df.selectExpr("value.Datetime","value.Close")
+data = value_df.selectExpr("value.Datetime","value.Close")
 
 # data.printSchema()
 # # Generate running word count
@@ -68,6 +69,9 @@ data = df.select(col("key").cast("string"),from_json(col("value").cast("string")
 #     .option("path","output") \
 #     .option("checkpointLocation","check-points") \
 #     .start()
+
+# query.awaitTermination()
+
 
 class ForeachWriter:
     def open(self, partition_id, epoch_id):
@@ -84,28 +88,27 @@ class ForeachWriter:
         pass
 
 def process_row(row):
-    # print('OP :',type(row))
-    df = pd.DataFrame(row)
-    print('OP :',df)
+    print('A :',row)
+    x = list(row)
+    print('B :', x)
+    df = pd.DataFrame(np.array([list(row)]), columns=['Datetime', 'Close'])
+    print('C :',df)
     # df = spark.createDataFrame(row)
     # df.write.format("csv").mode("append").save("./../../data/raw/data.csv")
-    df.to_csv('./data/raw/data.csv', mode='a', header=False)
+    df.to_csv('./data/raw/data.csv', mode='a', header=False, index=False)
 
-#     pass
-#     df.write \
-#         .format('console') \
-#         .option('checkpointLocation','check-points') \
-#         .start()
-
-# query = data \
-#     .writeStream \
-#     .foreachBatch(ForeachWriter()) \
-#     .queryName("Flatted Data") \
-#     .outputMode("append") \
-#     .option("checkpointLocation","check-points") \
+# query = data.writeStream \
+#     .foreach(process_row) \
+#     .option('checkpointLocation','check-points') \
+#     .outputMode('append') \
 #     .start()
 
-query = data.writeStream.foreach(process_row).start()
+
+query = data.writeStream \
+    .foreach(process_row) \
+    .option('checkpointLocation','check-points') \
+    .outputMode('append') \
+    .start()
 
 query.awaitTermination()
 
@@ -115,5 +118,8 @@ query.awaitTermination()
 #     .format('console') \
 #     .option('checkpointLocation','check-points') \
 #     .start()
+
+
+# query.awaitTermination()
 
 # logger.info('Listening to Kafka')

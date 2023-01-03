@@ -21,24 +21,24 @@ class MessageProducer:
         print("Sending message...")
         # random_values = [1,2,3,4,5,6,7,8,9]
 
-        while True:
+        # while True:
             # "^NSEI"
-            nifty = yf.Ticker("RELIANCE.NS")
-            df = nifty.history(period="2y", interval="1h")
-            df.reset_index(inplace=True)
-            for a in df.values:
-                data = {
-                    "Datetime": str(a[0]),
-                    "Open": int(a[1]),
-                    "High": int(a[2]),
-                    "Low": int(a[3]),
-                    "Close": int(a[4]),
-                    "Volume": int(a[5])
-                }
-                print(data)
-                self.producer.send(topic,data)
-                self.producer.flush()
-            sleep(60*1)
+        nifty = yf.Ticker("RELIANCE.NS")
+        df = nifty.history(period="2y", interval="1h")
+        df.reset_index(inplace=True)
+        for a in df.values:
+            data = {
+                "Datetime": str(a[0]),
+                "Open": int(a[1]),
+                "High": int(a[2]),
+                "Low": int(a[3]),
+                "Close": int(a[4]),
+                "Volume": int(a[5])
+            }
+            print(data)
+            self.producer.send(topic,data)
+            self.producer.flush()
+            # sleep(60*1)
 
 broker = 'localhost:9092'
 topic = 'test-topic'
