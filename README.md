@@ -6,6 +6,8 @@ through Apache Kafka. The data from Apache Kafka stream is transformed
 using Apache Spark. Flask web application shows forecasted prices along with 
 other visuals. Apache Airflow handles all this workflow.
 
+ <img src="Diagram.jpg"> 
+ 
 Project Organization
 ------------
 
