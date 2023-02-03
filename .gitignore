@@ -7,7 +7,7 @@ __pycache__/
 
 # Custom
 myenv/
-Checkpoints/
+check-points/
 
 # Distribution / packaging
 .Python
