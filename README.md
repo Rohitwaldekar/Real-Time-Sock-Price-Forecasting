@@ -8,7 +8,7 @@ other visuals. Apache Airflow handles all this workflow.
 
  <img src="images/Diagram.png"> 
 
-![alt text](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
+![Diagram](/Real-Time-Sock-Price-Forecasting/images/Diagram.png?raw=true "Diagram")
 
 ![Screenshot](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
  
