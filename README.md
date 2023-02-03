@@ -10,7 +10,7 @@ other visuals. Apache Airflow handles all this workflow.
 
 ![alt text](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
 
-![alt text](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
+![Screenshot](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
  
 ![alt text](images/Diagram.png)
 
