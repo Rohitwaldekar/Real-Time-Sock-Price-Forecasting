@@ -20,4 +20,8 @@ for i in range(1,10):
 
     ax1.plot(dif)
     ax1.set_title('Difference once')
+<<<<<<< HEAD
     plot_acf(dif, ax=ax2);
+=======
+    plot_acf(dif, ax=ax2);
+>>>>>>> 18e32c82e73716b910bd5eee3fc47b9a3f754ddc
