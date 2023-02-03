@@ -7,7 +7,7 @@ using Apache Spark. Flask web application shows forecasted prices along with
 other visuals. Apache Airflow handles all this workflow.
 
  <img src="images/Diagram.png"> 
- !(images/Diagram.png?raw=true)
+ ![alt text](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
  
 Project Organization
 ------------
