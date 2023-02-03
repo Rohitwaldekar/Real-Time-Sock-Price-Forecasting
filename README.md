@@ -7,7 +7,7 @@ using Apache Spark. Flask web application shows forecasted prices along with
 other visuals. Apache Airflow handles all this workflow.
 
  <img src="images/Diagram.png"> 
- (images/Diagram.png?raw=true)
+ !(images/Diagram.png?raw=true)
  
 Project Organization
 ------------
