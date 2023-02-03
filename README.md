@@ -8,6 +8,7 @@ other visuals. Apache Airflow handles all this workflow.
 
  <img src="Diagram.png"> 
  
+ 
 Project Organization
 ------------
 
