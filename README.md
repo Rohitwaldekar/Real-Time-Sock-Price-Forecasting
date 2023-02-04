@@ -6,13 +6,7 @@ through Apache Kafka. The data from Apache Kafka stream is transformed
 using Apache Spark. Flask web application shows forecasted prices along with 
 other visuals. Apache Airflow handles all this workflow.
 
- <img src="/images/Diagram.png"> 
-
-![Diagram](/Real-Time-Sock-Price-Forecasting/images/Diagram.png?raw=true "Diagram")
-
-![Screenshot](https://github.com/Rohitwaldekar/Real-Time-Sock-Price-Forecasting/blob/master/images/Diagram.png?raw=true)
- 
-![alt text](images/Diagram.png)
+<img src="/images/Diagram.png"> 
 
 Project Organization
 ------------
