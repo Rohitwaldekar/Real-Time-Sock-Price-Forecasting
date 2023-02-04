@@ -22,3 +22,5 @@ seaborn
 scikit-learn
 pmdarima
 statsmodels
+plotly
+dash
