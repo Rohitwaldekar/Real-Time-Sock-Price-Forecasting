@@ -1,3 +1,5 @@
+import sys
+
 import json
 from kafka import KafkaProducer
 from time import sleep
@@ -40,8 +42,18 @@ class MessageProducer:
             self.producer.flush()
             # sleep(60*1)
 
-broker = 'localhost:9092'
-topic = 'test-topic'
+def initial_data(self):
+    broker = 'localhost:9092'
+    topic = 'test-topic'
 
-message_producer = MessageProducer(broker,topic)
-message_producer.send_msg()
+    message_producer = MessageProducer(broker,topic)
+    message_producer.send_msg()
+
+
+if __name__ == '__main__':
+    
+    if sys.argv[1]=='historic':
+        pass
+
+    if sys.argv[1]=='live':
+        pass

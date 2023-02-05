@@ -1,6 +1,5 @@
 # spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.1 demo_2.py
-# import findspark
-# findspark.init() 
+import sys
 
 import pandas as pd
 import numpy as np
@@ -103,14 +102,14 @@ def process_row(row):
 #     .outputMode('append') \
 #     .start()
 
+def initial_load(self):
+    query = data.writeStream \
+        .foreach(process_row) \
+        .option('checkpointLocation','check-points') \
+        .outputMode('append') \
+        .start()
 
-query = data.writeStream \
-    .foreach(process_row) \
-    .option('checkpointLocation','check-points') \
-    .outputMode('append') \
-    .start()
-
-query.awaitTermination()
+    query.awaitTermination()
 
 # query = data \
 #     .writeStream \
@@ -123,3 +122,11 @@ query.awaitTermination()
 # query.awaitTermination()
 
 # logger.info('Listening to Kafka')
+
+if __name__ == '__main__':
+    
+    if sys.argv[1]=='historic':
+        pass
+
+    if sys.argv[1]=='live':
+        pass

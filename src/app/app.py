@@ -15,57 +15,17 @@ df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header
 
 df.columns = ['Datetime','Close']
 
-top_card = dbc.Card(
-    [
-        dbc.CardBody(
-            html.P("This card has an image at the top", className="card-text")
-        ),
-    ],
-    style={"width": "18rem"},
-)
-
-bottom_card = dbc.Card(
-    [
-        
-        dbc.CardBody([
-            html.H1(children='Hello Dash'),
-            html.P("This has a bottom image", className="card-text")
-        ])
-    ],
-    style={"width": "18rem"},
-)
-
-row1 = dbc.Row(
-    [
-        dbc.Col(bottom_card, width="auto")
-    ]
-)
-
-row2 = dbc.Row(
-    [
-        dbc.Col(top_card, width="auto"),
-        dbc.Col(bottom_card, width="auto"),
-    ]
-)
-
-# app.layout = html.Div([
-#     dbc.Container(row1, fluid=True),
-#     dbc.Container(row2, fluid=True)
-# ])
-
-# app.layout = dbc.Container([row1,row2], fluid=True)
-
 
 df = pd.DataFrame({'year':[1,2,3,3,4,5],'lifeExp':[7,5,3,3,2,1],'country':[1,1,1,0,0,0]})
 
 fig = px.line(df, x='year', y='lifeExp', color='country', symbol="country")
 
-# fig.update_layout(
-#     title='Stock Prices',
-#     xaxis_title='Date',
-#     yaxis_title='Price',
-#     template='plotly_white'
-# )
+fig.update_layout(
+    title='Stock Prices',
+    xaxis_title='Date',
+    yaxis_title='Price',
+    template='plotly_white'
+)
 
 # Creating line plot
 # fig = px.line(x=df['Datetime'], y=df['Close'])
@@ -108,6 +68,9 @@ app.layout = html.Div([
     dbc.Card(
         dbc.CardBody([
             html.H2(children='Real Time Sock Price Forcasting'),
+            html.Div(children='''
+                Select stock from below dropdown for forecasing.
+            '''),
             dcc.Dropdown(
                 id='dropdown',
                 options=[
@@ -170,26 +133,13 @@ app.layout = html.Div([
         'margin':'20px 20px 20px 20px'
 })
 
-# @app.callback(
-#     Output(component_id='graphx', component_property='figure'),
-#     Input(component_id='dropdown', component_property='value')
-# )
-# def update_stock(num):
-#     if num == 0:
-#         raise PreventUpdate
-#     else:
-#         df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
-#         df.columns = ['Datetime','Close']
-#         fig = px.line(x=df['Datetime'], y=df['Close'])
-#         fig.update_layout(
-#             title='Stock Prices',
-#             xaxis_title='Date',
-#             yaxis_title='Price',
-#             template='plotly_white',
-#             xaxis_rangeslider_visible=True
-#         )
-#         print('N ',num)
-#         return (fig)
+@app.callback(
+    Output(component_id='my_interval', component_property='n_intervals'),
+    Input(component_id='dropdown', component_property='value')
+)
+def update_stock(num):
+    print('N ',num)
+    return 0        
     
 
 # @app.callback(
