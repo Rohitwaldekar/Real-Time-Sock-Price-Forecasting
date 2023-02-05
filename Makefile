@@ -81,10 +81,10 @@ test_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
-historic_data: requirements
+historic_data:
 	$(PYTHON_INTERPRETER) src/__init__.py historic
 
-live_data: requirements
+live_data:
 	$(PYTHON_INTERPRETER) src/__init__.py live
 
 #################################################################################

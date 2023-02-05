@@ -3,18 +3,62 @@ import plotly.express as px
 import pathlib
 
 from dash import Dash, dcc, html, Input, Output
+import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 
-app = Dash(__name__)
+# app = Dash(__name__)
+
+app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 dirname = pathlib.Path(__file__).parent.resolve().parent.resolve().parent.resolve()
 df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
 
 df.columns = ['Datetime','Close']
 
-# df = pd.DataFrame({'year':[1,2,3,3,4,5],'lifeExp':[7,5,3,3,2,1],'country':[1,1,1,0,0,0]})
+top_card = dbc.Card(
+    [
+        dbc.CardBody(
+            html.P("This card has an image at the top", className="card-text")
+        ),
+    ],
+    style={"width": "18rem"},
+)
 
-# fig = px.line(df, x='year', y='lifeExp', color='country', symbol="country")
+bottom_card = dbc.Card(
+    [
+        
+        dbc.CardBody([
+            html.H1(children='Hello Dash'),
+            html.P("This has a bottom image", className="card-text")
+        ])
+    ],
+    style={"width": "18rem"},
+)
+
+row1 = dbc.Row(
+    [
+        dbc.Col(bottom_card, width="auto")
+    ]
+)
+
+row2 = dbc.Row(
+    [
+        dbc.Col(top_card, width="auto"),
+        dbc.Col(bottom_card, width="auto"),
+    ]
+)
+
+# app.layout = html.Div([
+#     dbc.Container(row1, fluid=True),
+#     dbc.Container(row2, fluid=True)
+# ])
+
+# app.layout = dbc.Container([row1,row2], fluid=True)
+
+
+df = pd.DataFrame({'year':[1,2,3,3,4,5],'lifeExp':[7,5,3,3,2,1],'country':[1,1,1,0,0,0]})
+
+fig = px.line(df, x='year', y='lifeExp', color='country', symbol="country")
 
 # fig.update_layout(
 #     title='Stock Prices',
@@ -24,25 +68,25 @@ df.columns = ['Datetime','Close']
 # )
 
 # Creating line plot
-fig = px.line(x=df['Datetime'], y=df['Close'])
+# fig = px.line(x=df['Datetime'], y=df['Close'])
 
 # Updating layout
-fig.update_layout(
-    title='Stock Prices',
-    xaxis_title='Date',
-    yaxis_title='Price',
-    template='plotly_white',
-    xaxis_rangeslider_visible=True
-)
+# fig.update_layout(
+#     title='Stock Prices',
+#     xaxis_title='Date',
+#     yaxis_title='Price',
+#     template='plotly_white',
+#     xaxis_rangeslider_visible=True
+# )
 
-import plotly.graph_objects as go
+# import plotly.graph_objects as go
 
 # fig = go.Figure()
 
 # fig.add_trace(go.Scatter(
 #     x=df['Datetime'], 
 #     y=df['Close'],
-#     name="Current"
+#     name="Current"  
 # ))
 
 # fig.add_trace(go.Scatter(
@@ -55,48 +99,119 @@ app.layout = html.Div([
     
     dcc.Interval(
         id= 'my_interval', 
-        interval= 1000*1, 
+        interval= 1000*30, 
         disabled= False, 
         n_intervals= 0, 
         max_intervals= -1
     ),
 
-    html.H1(children='Hello Dash'),
+    dbc.Card(
+        dbc.CardBody([
+            html.H2(children='Real Time Sock Price Forcasting'),
+            dcc.Dropdown(
+                id='dropdown',
+                options=[
+                    {'label': 'New York City', 'value': 'New York City'},
+                    {'label': 'Montreal', 'value': 'Montreal'},
+                    {'label': 'San Francisco', 'value': 'San Francisco'},
+                ],
+                clearable=False,
+                value='Montreal',
+                style={
+                    'width': '60%'
+                }
+            )
+        ]),
+        color='#85CDFD'
+    ),
 
-    html.Div(children='''
-        Dash: A web application framework for your data.
-    '''),
-
-    dcc.Dropdown(['NYC', 'MTL', 'SF'], 'NYC', id='demo-dropdown'),
-
-    html.Div(id='container', children=[]),
-
-    dcc.Graph(
-        id='graph',
-        figure={}
+    html.Div(
+        dbc.Card(
+            dbc.CardBody([
+                dcc.Graph(
+                    id='graph',
+                    figure=fig
+                )
+            ]),
+            style={
+                'width': '100%' 
+            },
+        ),
+        style={
+            'margin-top': '20px'
+        }
     )
-])
+    
+        # html.H1(children='Hello Dash'),
 
-@app.callback(
-    Output(component_id='graph', component_property='figure'),
-    Input(component_id='my_interval', component_property='n_intervals')
-)
-def update_output(num):
-    if num == 0:
-        raise PreventUpdate
-    else:
-        df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
-        df.columns = ['Datetime','Close']
-        fig = px.line(x=df['Datetime'], y=df['Close'])
-        fig.update_layout(
-            title='Stock Prices',
-            xaxis_title='Date',
-            yaxis_title='Price',
-            template='plotly_white',
-            xaxis_rangeslider_visible=True
-        )
-        print('N ',num)
-        return (fig)
+        # html.Div(children='''
+        #     Dash: A web application framework for your data.
+        # '''),
+
+        # dcc.Dropdown(
+        #     id='dropdown',
+        #     options=[
+        #         {'label': 'New York City', 'value': 'New York City'},
+        #         {'label': 'Montreal', 'value': 'Montreal'},
+        #         {'label': 'San Francisco', 'value': 'San Francisco'},
+        #     ],
+        #     clearable=False,
+        #     value='Montreal',
+        #     style={'width': '40%', 'align': 'end'}
+        # ),
+
+        # html.Div(id='container', children=[]),
+
+        # dcc.Graph(
+        #     id='graph',
+        #     figure={}
+        # )
+    ], style={
+        'margin':'20px 20px 20px 20px'
+})
+
+# @app.callback(
+#     Output(component_id='graphx', component_property='figure'),
+#     Input(component_id='dropdown', component_property='value')
+# )
+# def update_stock(num):
+#     if num == 0:
+#         raise PreventUpdate
+#     else:
+#         df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
+#         df.columns = ['Datetime','Close']
+#         fig = px.line(x=df['Datetime'], y=df['Close'])
+#         fig.update_layout(
+#             title='Stock Prices',
+#             xaxis_title='Date',
+#             yaxis_title='Price',
+#             template='plotly_white',
+#             xaxis_rangeslider_visible=True
+#         )
+#         print('N ',num)
+#         return (fig)
+    
+
+# @app.callback(
+#     Output(component_id='graph', component_property='figure'),
+#     Input(component_id='my_interval', component_property='n_intervals')
+# )
+# def update_graph(num):
+#     if num > -1:
+#     #     raise PreventUpdate
+#     # else:
+#         df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
+#         df.columns = ['Datetime','Close']
+#         fig = px.line(x=df['Datetime'], y=df['Close'])
+#         fig.update_layout(
+#             title='Stock Prices',
+#             xaxis_title='Date',
+#             yaxis_title='Price',
+#             template='plotly_white',
+#             # xaxis_rangeslider_visible=True
+#         )
+#         print('N ',num)
+#         return (fig)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
