@@ -3,8 +3,7 @@ Real-Time-Data-Analysis
 
 In this project, we get real-time data from yahoo finance API and ingest it 
 through Apache Kafka. The data from Apache Kafka stream is transformed 
-using Apache Spark. Flask web application shows forecasted prices along with 
-other visuals.
+using Apache Spark. Flask web application shows forecasted prices.
 
 <img src="/diagram.png"> 
 
