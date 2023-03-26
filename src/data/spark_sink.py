@@ -102,7 +102,7 @@ def process_row(row):
 #     .outputMode('append') \
 #     .start()
 
-def initial_load(self):
+def initial_load():
     query = data.writeStream \
         .foreach(process_row) \
         .option('checkpointLocation','check-points') \
@@ -125,8 +125,9 @@ def initial_load(self):
 
 if __name__ == '__main__':
     
-    if sys.argv[1]=='historic':
-        pass
+    initial_load()
+    # if sys.argv[1]=='historic':
+    #     pass
 
-    if sys.argv[1]=='live':
-        pass
+    # if sys.argv[1]=='live':
+    #     pass

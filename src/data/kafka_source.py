@@ -25,6 +25,7 @@ class MessageProducer:
 
         # while True:
             # "^NSEI"
+
         nifty = yf.Ticker("RELIANCE.NS")
         df = nifty.history(period="2y", interval="1h")
         df.reset_index(inplace=True)
@@ -38,11 +39,11 @@ class MessageProducer:
                 "Volume": int(a[5])
             }
             print(data)
-            self.producer.send(topic,data)
+            self.producer.send(self.topic,data)
             self.producer.flush()
             # sleep(60*1)
 
-def initial_data(self):
+def initial_data():
     broker = 'localhost:9092'
     topic = 'test-topic'
 
@@ -52,8 +53,10 @@ def initial_data(self):
 
 if __name__ == '__main__':
     
-    if sys.argv[1]=='historic':
-        pass
+    initial_data()
+    
+    # if sys.argv[1]=='historic':
+    #     pass
 
-    if sys.argv[1]=='live':
-        pass
+    # if sys.argv[1]=='live':
+    #     pass

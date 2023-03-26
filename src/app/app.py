@@ -74,9 +74,11 @@ app.layout = html.Div([
             dcc.Dropdown(
                 id='dropdown',
                 options=[
-                    {'label': 'New York City', 'value': 'New York City'},
-                    {'label': 'Montreal', 'value': 'Montreal'},
-                    {'label': 'San Francisco', 'value': 'San Francisco'},
+                    {'label': 'Reliance Industries', 'value': 'RELIANCE.NS'},
+                    {'label': 'Tata Consultancy Services', 'value': 'TCS.NS'},
+                    {'label': 'HDFC Bank', 'value': 'HDFCBANK.NS'},
+                    {'label': 'ICICI Bank', 'value': 'ICICIBANK.NS'},
+                    {'label': 'Hindustan Unilever', 'value': 'HINDUNILVR.NS'}, 
                 ],
                 clearable=False,
                 value='Montreal',
