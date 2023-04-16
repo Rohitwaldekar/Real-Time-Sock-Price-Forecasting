@@ -1,4 +1,5 @@
 # spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.1 demo_2.py
+import pathlib
 import sys
 
 import pandas as pd
@@ -11,6 +12,12 @@ from pyspark.sql.types import IntegerType,TimestampType,StructType,StructField
 from pyspark.sql.functions import explode, split, col, from_json
 
 # from lib.logger import Log4j
+# import subprocess
+
+# print('CWD :',pathlib.Path.cwd())
+
+# cmd_str = "park-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.1 src/data/spark_sink.py"
+# subprocess.run(cmd_str, shell=False)
 
 schema = StructType([
     StructField("Datetime",TimestampType()),
@@ -35,6 +42,8 @@ spark = SparkSession.builder \
     .appName("KafkaSpark") \
     .config("spark.streaming.stopGracefullyOnShutdown", "true") \
     .getOrCreate()
+
+spark.sparkContext.setLogLevel('OFF')
 
 # logger = Log4j(spark)
 
@@ -103,6 +112,15 @@ def process_row(row):
 #     .start()
 
 def initial_load():
+    print('Spark Checking')
+    
+    # query = data.writeStream \
+    #     .foreach(process_row) \
+    #     .option('checkpointLocation','check-points') \
+    #     .outputMode('append') \
+    #     .start()
+    
+    print('Spark Checking')
     query = data.writeStream \
         .foreach(process_row) \
         .option('checkpointLocation','check-points') \

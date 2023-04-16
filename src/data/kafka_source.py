@@ -10,10 +10,12 @@ class MessageProducer:
     broker = ""
     topic = ""
     producer = None
+    ticker = ""
 
-    def __init__(self, broker, topic):
+    def __init__(self, broker, topic, ticker):
         self.broker = broker
         self.topic = topic
+        self.ticker = ticker
 
         self.producer = KafkaProducer(
             bootstrap_servers=self.broker,
@@ -26,8 +28,9 @@ class MessageProducer:
         # while True:
             # "^NSEI"
 
-        nifty = yf.Ticker("RELIANCE.NS")
-        df = nifty.history(period="2y", interval="1h")
+        # nifty = yf.Ticker("RELIANCE.NS")
+        stock= yf.Ticker(self.ticker)
+        df = stock.history(period="2y", interval="1h")
         df.reset_index(inplace=True)
         for a in df.values:
             data = {
@@ -43,17 +46,17 @@ class MessageProducer:
             self.producer.flush()
             # sleep(60*1)
 
-def initial_data():
+def initial_data(ticker):
     broker = 'localhost:9092'
     topic = 'test-topic'
 
-    message_producer = MessageProducer(broker,topic)
+    message_producer = MessageProducer(broker,topic,ticker)
     message_producer.send_msg()
 
 
 if __name__ == '__main__':
     
-    initial_data()
+    initial_data('RELIANCE.NS')
     
     # if sys.argv[1]=='historic':
     #     pass

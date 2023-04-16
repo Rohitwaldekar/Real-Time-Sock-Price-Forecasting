@@ -80,6 +80,8 @@ test_environment:
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
+start:
+	$(PYTHON_INTERPRETER) src/__init__.py historic
 
 historic_data:
 	$(PYTHON_INTERPRETER) src/__init__.py historic

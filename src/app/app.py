@@ -6,19 +6,39 @@ from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 
+# from src.data import kafka_source as ks
+# from src.data import spark_sink as ss
+
+import subprocess
+
 # app = Dash(__name__)
+
+# ks.initial_data('RELIANCE.NS')
+    
+# ss.initial_load()
 
 app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 dirname = pathlib.Path(__file__).parent.resolve().parent.resolve().parent.resolve()
-df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
 
-df.columns = ['Datetime','Close']
+try :
+    df = pd.read_csv(str(dirname)+str("/data/raw/data.csv"),parse_dates=True, header=None)
 
+    df.columns = ['Datetime','Close']
+    flag = False
 
-df = pd.DataFrame({'year':[1,2,3,3,4,5],'lifeExp':[7,5,3,3,2,1],'country':[1,1,1,0,0,0]})
+except :
+    flag = True
+    
 
-fig = px.line(df, x='year', y='lifeExp', color='country', symbol="country")
+# df = pd.DataFrame({'year':[1,2,3,3,4,5],'lifeExp':[7,5,3,3,2,1],'country':[1,1,1,0,0,0]})
+
+# fig = px.line(df, x='year', y='lifeExp', color='country', symbol="country")
+if(flag):
+    fig = px.line()
+else:
+    fig = px.line(df, x='Datetime', y='Close')
+    
 
 fig.update_layout(
     title='Stock Prices',
@@ -81,7 +101,7 @@ app.layout = html.Div([
                     {'label': 'Hindustan Unilever', 'value': 'HINDUNILVR.NS'}, 
                 ],
                 clearable=False,
-                value='Montreal',
+                value='RELIANCE.NS',
                 style={
                     'width': '60%'
                 }
@@ -99,7 +119,7 @@ app.layout = html.Div([
                 )
             ]),
             style={
-                'width': '100%' 
+                'width': '100%'
             },
         ),
         style={
@@ -140,7 +160,19 @@ app.layout = html.Div([
     Input(component_id='dropdown', component_property='value')
 )
 def update_stock(num):
+
     print('N ',num)
+
+    open('./data/raw/data.csv', 'w').close()
+    # df.to_csv('./data/raw/data.csv')
+
+    # ss.initial_load()
+    
+    # ks.initial_data(num)
+    
+    # cmd_str = "park-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.1 src/data/spark_sink.py"
+    # subprocess.run(cmd_str, shell=True)
+
     return 0        
     
 
